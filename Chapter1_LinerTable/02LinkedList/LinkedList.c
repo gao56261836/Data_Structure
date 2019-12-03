@@ -332,11 +332,13 @@ int main() {
     CreateListTail(&L,20);
     printf("整体创建 单链表 L 的元素(尾插法), L.data = ");
     ListTraverse(L);
-    
+
     printf("===========================\n");
     printf("链表反转:\n");
     LinkedListReverse(L);
     ListTraverse(L);
+
+
 
 
     return 0;
