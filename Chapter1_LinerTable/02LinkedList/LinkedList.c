@@ -210,6 +210,18 @@ void CreateListTail(LinkList *L, int n) {
     r->next = NULL;       // 当前链表结束
 }
 
+void LinkedListReverse(LinkList L){
+    LinkList p,q;
+    p = L->next;
+    L->next= NULL;
+    while (p!=NULL){
+        q = p->next;
+        p->next = L->next;
+        L->next = p;
+        p=q;
+    }
+}
+
 int main() {
     LinkList L;
     ElemType e;
@@ -319,6 +331,11 @@ int main() {
     printf("清空是否成功 : %d (1 : 成功 , 0 : 失败),ListLength(L) = %d\n",i,ListLength(L));
     CreateListTail(&L,20);
     printf("整体创建 单链表 L 的元素(尾插法), L.data = ");
+    ListTraverse(L);
+    
+    printf("===========================\n");
+    printf("链表反转:\n");
+    LinkedListReverse(L);
     ListTraverse(L);
 
 
