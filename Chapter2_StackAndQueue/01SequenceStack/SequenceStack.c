@@ -92,20 +92,53 @@ Status StackTraverse(SqStack S) {
     return OK;
 }
 
+Status BracketMatching(char *s) {
+    SqStack S;
+    SElemType e;
+    int i;
+
+    i = 0;
+    InitStack(&S);
+
+    while (s[i]) {
+        switch (s[i]) {
+            case '(':
+            case '[':
+            case '{' :
+                Push(&S, s[i]);
+                break;
+
+            case ')':
+            case ']':
+            case '}':
+                if (StackEmpty(S))
+                    return ERROR;
+                Pop(&S, &e);
+                break;
+        }
+        i++;
+    }
+
+    if (StackEmpty(S))
+        return OK;
+    else
+        return ERROR;
+}
+
 int main() {
     int j;
     SqStack S;
     int e;
-    if (InitStack(&S)==OK){
+    if (InitStack(&S) == OK) {
         for (j = 1; j <= 10; ++j) {
-            Push(&S,j);
+            Push(&S, j);
         }
     }
     printf("栈中元素依次为 : ");
     StackTraverse(S);
 
-    Pop(&S,&e);
-    printf("弹出的栈顶元素为 e = %d\n",e);
+    Pop(&S, &e);
+    printf("弹出的栈顶元素为 e = %d\n", e);
 
     /*Pop(&S,&e);
     printf("弹出的栈顶元素为 e = %d\n",e);
@@ -114,13 +147,23 @@ int main() {
     Pop(&S,&e);
     printf("弹出的栈顶元素为 e = %d\n",e);*/
 
-    printf("栈空否 : %d (1 : 空, 0 : 不为空)\n",StackEmpty(S));
-    GetTop(S,&e);
-    printf("栈顶元素 = %d  栈的长度 = %d\n",e,StackLength(S));
+    printf("栈空否 : %d (1 : 空, 0 : 不为空)\n", StackEmpty(S));
+    GetTop(S, &e);
+    printf("栈顶元素 = %d  栈的长度 = %d\n", e, StackLength(S));
 
     ClearStack(&S);
-    printf("清空栈后, 栈空否 : %d (1 : 空, 0 : 不为空)\n",StackEmpty(S));
+    printf("清空栈后, 栈空否 : %d (1 : 空, 0 : 不为空)\n", StackEmpty(S));
 
+    printf("=======================\n");
+    printf("括号匹配\n");
+
+    char *s = "(1+2)*3/{2/[(4-5)*3]-5*(8-7)}";
+
+    printf("判断表达式 %s 开闭括号是否匹配  ", s);
+    if (BracketMatching(s))
+        printf("表达式 s 开闭括号匹配!\n");
+    else
+        printf("表达式 s 开闭括号不匹配!\n");
     return 0;
 }
 
